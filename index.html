@@ -151,6 +151,25 @@
     body.mobile-immersive-game #btn-mobile-exit-game {
       display: flex !important;
     }
+    body.mobile-immersive-game #btn-mobile-menu-open {
+      display: flex !important;
+    }
+    #mobile-top-drawer-backdrop {
+      opacity: 0;
+      pointer-events: none;
+      transition: opacity 220ms ease;
+    }
+    body.mobile-menu-open #mobile-top-drawer-backdrop {
+      opacity: 1;
+      pointer-events: auto;
+    }
+    #mobile-top-drawer {
+      transform: translateY(-105%);
+      transition: transform 260ms cubic-bezier(0.22, 1, 0.36, 1);
+    }
+    body.mobile-menu-open #mobile-top-drawer {
+      transform: translateY(0);
+    }
     body.mobile-immersive-game #table-winner-badge {
       top: 48px !important;
     }
@@ -849,6 +868,61 @@
 
       <!-- Top-Right Exit (X) Button for Mobile Portrait Immersive Game Mode -->
       <button id="btn-mobile-exit-game" type="button" title="게임 나가기" class="hidden absolute top-2.5 right-2.5 z-30 w-9 h-9 rounded-full bg-slate-950/90 hover:bg-rose-600 text-white border border-slate-600/80 hover:border-rose-400 font-black text-base shadow-2xl backdrop-blur-md items-center justify-center transition">✕</button>
+
+      <!-- Top-Center "▾ 메뉴 열기" Pill Button (Mobile Portrait Fullscreen) -->
+      <button id="btn-mobile-menu-open" type="button" class="hidden absolute top-2 left-1/2 -translate-x-1/2 z-30 px-3 py-1 rounded-full bg-slate-950/88 hover:bg-slate-800 text-slate-100 border border-slate-600/80 text-[11px] font-black shadow-xl backdrop-blur-md items-center gap-1 transition">
+        <span>▾</span> <span>메뉴 열기</span>
+      </button>
+
+      <!-- Sliding Top Menu Drawer Backdrop & Panel -->
+      <div id="mobile-top-drawer-backdrop" class="fixed inset-0 z-[48] bg-slate-950/45 backdrop-blur-[2px]"></div>
+      <div id="mobile-top-drawer" class="fixed top-0 left-0 right-0 z-[49] bg-slate-900/95 backdrop-blur-xl border-b-2 border-indigo-400/50 rounded-b-3xl shadow-[0_18px_50px_rgba(0,0,0,0.85)] p-3.5 pt-3 flex flex-col gap-3">
+        <div class="flex items-center justify-between gap-2">
+          <div class="flex items-center gap-2">
+            <span class="text-base">🃏</span>
+            <span id="mob-drawer-mode-label" class="text-xs font-black text-amber-300">GTO 포커 마스터</span>
+          </div>
+          <div class="flex items-center gap-1.5 text-[11px] font-bold">
+            <span class="px-2 py-0.5 rounded-lg bg-slate-800 text-amber-300 border border-slate-700">🔥 <span id="mob-drawer-streak">0</span></span>
+            <span class="px-2 py-0.5 rounded-lg bg-slate-800 text-emerald-300 border border-slate-700">🎯 <span id="mob-drawer-acc">100%</span></span>
+          </div>
+        </div>
+
+        <div class="grid grid-cols-3 gap-2 text-[11px] font-black">
+          <button id="mob-btn-switch-game" type="button" class="py-2.5 px-2 rounded-xl bg-indigo-600/85 hover:bg-indigo-500 text-white border border-indigo-400/50 flex flex-col items-center gap-0.5 shadow">
+            <span class="text-sm">🎮</span><span>게임 변경</span>
+          </button>
+          <button id="mob-btn-scoreboard" type="button" class="py-2.5 px-2 rounded-xl bg-amber-500/20 hover:bg-amber-500/30 text-amber-300 border border-amber-400/50 flex flex-col items-center gap-0.5 shadow">
+            <span class="text-sm">🏆</span><span>랭킹 보기</span>
+          </button>
+          <button id="mob-btn-profile" type="button" class="py-2.5 px-2 rounded-xl bg-slate-800 hover:bg-slate-700 text-slate-100 border border-slate-700 flex flex-col items-center gap-0.5 shadow">
+            <span class="text-sm">🪪</span><span>내 프로필</span>
+          </button>
+          <button id="mob-btn-speed" type="button" class="py-2.5 px-2 rounded-xl bg-slate-800 hover:bg-slate-700 text-slate-100 border border-slate-700 flex flex-col items-center gap-0.5 shadow">
+            <span class="text-sm">⚡</span><span id="mob-speed-text">속도: 보통</span>
+          </button>
+          <button id="mob-btn-sound" type="button" class="py-2.5 px-2 rounded-xl bg-slate-800 hover:bg-slate-700 text-slate-100 border border-slate-700 flex flex-col items-center gap-0.5 shadow">
+            <span id="mob-sound-icon" class="text-sm">🔊</span><span>효과음</span>
+          </button>
+          <button id="mob-btn-wide" type="button" class="py-2.5 px-2 rounded-xl bg-slate-800 hover:bg-slate-700 text-slate-100 border border-slate-700 flex flex-col items-center gap-0.5 shadow">
+            <span class="text-sm">🔭</span><span>시야 전환</span>
+          </button>
+          <button id="mob-btn-coloring" type="button" class="py-2.5 px-2 rounded-xl bg-slate-800 hover:bg-slate-700 text-slate-100 border border-slate-700 flex flex-col items-center gap-0.5 shadow">
+            <span class="text-sm">🎨</span><span>차트 연습</span>
+          </button>
+          <button id="mob-btn-next" type="button" class="py-2.5 px-2 rounded-xl bg-emerald-600/80 hover:bg-emerald-500 text-white border border-emerald-400/40 flex flex-col items-center gap-0.5 shadow">
+            <span class="text-sm">▶</span><span>다음 핸드</span>
+          </button>
+          <button id="mob-btn-exit" type="button" class="py-2.5 px-2 rounded-xl bg-rose-600/80 hover:bg-rose-500 text-white border border-rose-400/40 flex flex-col items-center gap-0.5 shadow">
+            <span class="text-sm">✕</span><span>게임 나가기</span>
+          </button>
+        </div>
+
+        <!-- Pull-Up Close Button -->
+        <button id="btn-mobile-menu-close" type="button" class="w-full py-2 rounded-2xl bg-slate-800/90 hover:bg-slate-700 text-slate-200 border border-slate-600/80 text-xs font-black flex items-center justify-center gap-1.5 shadow-inner transition">
+          <span>▴</span> <span>메뉴 위로 올려 닫기</span>
+        </button>
+      </div>
 
       <!-- Subtle Winner Badge -->
       <div id="table-winner-badge" class="hidden absolute top-3 right-3 z-20 pointer-events-none text-xs font-black px-3 py-1 rounded-full bg-amber-500 text-slate-950 shadow-lg">
@@ -5169,6 +5243,7 @@
     let boardGroup3D = null;
     let boardCardMeshes = [];
     let boardSlotMats = [];
+    let boardCardAnims = [null, null, null, null, null];
     let feltPotPlaneMesh = null;
 
     // Coloring State (Strictly scoped to activeGameMode!)
@@ -5446,8 +5521,9 @@
       if (railMesh) railMesh.scale.set(isP ? 0.70 : 1.12, isP ? 1.15 : 0.72, 1);
       if (trimMesh) trimMesh.scale.set(isP ? 0.70 : 1.12, isP ? 1.15 : 0.72, 1);
       if (boardGroup3D) {
-        boardGroup3D.scale.setScalar(isP ? 0.76 : 1.0);
-        boardGroup3D.position.set(0, 0.11, isP ? -0.52 : -0.45);
+        // Make Flop/Turn/River board cards noticeably larger & bolder in portrait mode!
+        boardGroup3D.scale.set(isP ? 1.02 : 1.0, isP ? 1.12 : 1.0, isP ? 1.12 : 1.0);
+        boardGroup3D.position.set(0, 0.14, isP ? -0.42 : -0.45);
       }
       if (feltPotPlaneMesh) {
         const isPF = !!getGameConfig().isPostflop;
@@ -5828,7 +5904,27 @@
       setTimeout(resize3DCanvas, 60);
     }
 
+    function openMobileTopDrawer() {
+      const cfg = getGameConfig();
+      const lbl = document.getElementById('mob-drawer-mode-label');
+      if (lbl) lbl.textContent = cfg.label;
+      const st = document.getElementById('mob-drawer-streak');
+      if (st) st.textContent = document.getElementById('stat-streak').textContent;
+      const ac = document.getElementById('mob-drawer-acc');
+      if (ac) ac.textContent = document.getElementById('stat-accuracy').textContent;
+      const sp = document.getElementById('mob-speed-text');
+      if (sp) sp.textContent = `속도: ${gameSpeed === 'normal' ? '보통' : '빠름'}`;
+      const si = document.getElementById('mob-sound-icon');
+      if (si) si.textContent = soundEnabled ? '🔊' : '🔇';
+      document.body.classList.add('mobile-menu-open');
+    }
+
+    function closeMobileTopDrawer() {
+      document.body.classList.remove('mobile-menu-open');
+    }
+
     function exitMobileImmersiveGame() {
+      closeMobileTopDrawer();
       clearTimeout(aiTurnTimer);
       clearTimeout(autoChartTimer);
       clearTimeout(postflopReplayTimer);
@@ -6432,6 +6528,24 @@
         }
       });
 
+      // Animate Flop / Turn / River board cards smoothly rising from below into upright view
+      if (boardGroup3D && boardGroup3D.visible && boardCardMeshes.length === 5) {
+        const nowBoardMs = performance.now();
+        for (let i = 0; i < 5; i++) {
+          const anim = boardCardAnims[i];
+          if (!anim) continue;
+          const mesh = boardCardMeshes[i];
+          const p = Math.min(1, (nowBoardMs - anim.startTime) / anim.duration);
+          // Smooth cubic ease-out with subtle crisp settle
+          const ease = 1 - Math.pow(1 - p, 3);
+          mesh.position.y = 0.06 + (0.58 - 0.06) * ease;
+          mesh.position.z = 0.56 + (0.02 - 0.56) * ease;
+          mesh.rotation.x = 0.14 + (0.92 - 0.14) * ease;
+          mesh.scale.setScalar(0.74 + (1.54 - 0.74) * ease);
+          if (p >= 1) boardCardAnims[i] = null;
+        }
+      }
+
       for (let i = flyingChips.length - 1; i >= 0; i--) {
         const fc = flyingChips[i];
         fc.progress += 0.07;
@@ -6690,21 +6804,39 @@
       return `<span class="inline-flex items-center px-1.5 py-0.5 rounded bg-white border border-slate-300 font-black text-xs shadow-sm ${isRed ? 'text-red-600' : 'text-slate-900'}">${c.rank}${c.suit.symbol}</span>`;
     }
 
-    function updateBoardCards3D(boardCodes) {
+    function updateBoardCards3D(boardCodes, instant) {
       if (!boardGroup3D || boardCardMeshes.length !== 5) return;
+      const nowMs = performance.now();
       for (let i = 0; i < 5; i++) {
         const mesh = boardCardMeshes[i];
         const slotMat = boardSlotMats[i];
         if (i < boardCodes.length) {
           const c = parseCardStr(boardCodes[i]);
           if (c) {
+            const wasHidden = !mesh.visible;
             mesh.material[2].map = createCardFaceTexture(c.rank, c.suit);
             mesh.material[2].needsUpdate = true;
             mesh.visible = true;
             if (slotMat) slotMat.material.opacity = 0.04;
+
+            if (wasHidden && !instant) {
+              // Start slightly lower, forward, flatter & smaller, then smoothly glide up into place!
+              mesh.position.y = 0.06;
+              mesh.position.z = 0.56;
+              mesh.rotation.x = 0.14;
+              mesh.scale.setScalar(0.74);
+              boardCardAnims[i] = { startTime: nowMs, duration: 360 };
+            } else if (instant) {
+              mesh.position.y = 0.58;
+              mesh.position.z = 0.02;
+              mesh.rotation.x = 0.92;
+              mesh.scale.setScalar(1.54);
+              boardCardAnims[i] = null;
+            }
           }
         } else {
           mesh.visible = false;
+          boardCardAnims[i] = null;
           if (slotMat) slotMat.material.opacity = 0.16;
         }
       }
@@ -6949,7 +7081,7 @@
         document.getElementById('pf-history-text').textContent = `[${ev.street}] ${ev.text} · 팟 ${ev.pot}BB`;
 
         if (isInstant) {
-          updateBoardCards3D(spot.board.slice(0, ev.deal));
+          updateBoardCards3D(spot.board.slice(0, ev.deal), true);
           return 0;
         }
 
@@ -8206,6 +8338,45 @@
     document.getElementById('btn-pf-mini-prev').addEventListener('click', () => loadPostflopSpot(postflopCursor - 1));
     document.getElementById('btn-pf-mini-next').addEventListener('click', () => loadPostflopSpot(postflopCursor + 1));
     document.getElementById('btn-mobile-exit-game').addEventListener('click', exitMobileImmersiveGame);
+    document.getElementById('btn-mobile-menu-open').addEventListener('click', openMobileTopDrawer);
+    document.getElementById('btn-mobile-menu-close').addEventListener('click', closeMobileTopDrawer);
+    document.getElementById('mobile-top-drawer-backdrop').addEventListener('click', closeMobileTopDrawer);
+
+    document.getElementById('mob-btn-switch-game').addEventListener('click', () => {
+      closeMobileTopDrawer();
+      document.getElementById('btn-open-game-switcher').click();
+    });
+    document.getElementById('mob-btn-scoreboard').addEventListener('click', () => {
+      closeMobileTopDrawer();
+      openScoreboardModal();
+    });
+    document.getElementById('mob-btn-profile').addEventListener('click', () => {
+      closeMobileTopDrawer();
+      openProfileModal(playerRecord);
+    });
+    document.getElementById('mob-btn-speed').addEventListener('click', () => {
+      document.getElementById('btn-speed-toggle').click();
+      const sp = document.getElementById('mob-speed-text');
+      if (sp) sp.textContent = `속도: ${gameSpeed === 'normal' ? '보통' : '빠름'}`;
+    });
+    document.getElementById('mob-btn-sound').addEventListener('click', () => {
+      document.getElementById('btn-sound-toggle').click();
+      const si = document.getElementById('mob-sound-icon');
+      if (si) si.textContent = soundEnabled ? '🔊' : '🔇';
+    });
+    document.getElementById('mob-btn-wide').addEventListener('click', () => {
+      toggleWideView();
+      closeMobileTopDrawer();
+    });
+    document.getElementById('mob-btn-coloring').addEventListener('click', () => {
+      closeMobileTopDrawer();
+      document.getElementById('btn-mode-coloring').click();
+    });
+    document.getElementById('mob-btn-next').addEventListener('click', () => {
+      closeMobileTopDrawer();
+      dealNewHand();
+    });
+    document.getElementById('mob-btn-exit').addEventListener('click', exitMobileImmersiveGame);
     document.getElementById('seats-overlay').addEventListener('click', (e) => {
       const node = e.target.closest('[data-villain-pos]');
       if (node && node.dataset.villainPos) {
